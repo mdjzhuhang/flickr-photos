@@ -1,0 +1,70 @@
+$primary-color: #d93c3c;
+$bg-color: #FFFFFF;
+$font-color: #FFFFFF;
+
+// Extra Small devices
+@mixin xs {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
+.main {
+  background-color: $bg-color;
+
+  ul {
+    max-width: 1190px;
+    margin: 0 auto;
+    background-color: $bg-color;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    color: $font-color;
+
+    @include xs {
+      flex-direction: column;
+    }
+
+    li {
+      height: 200px;
+      width: 270px;
+      background-repeat: no-repeat;
+      background-position: 50%;
+      background-size: cover;
+      position: relative;
+      margin: 8px; 
+
+      @include xs {
+        max-height: 770px;
+        width: 100%;
+        margin: 0; 
+      }
+
+      a {
+        position: absolute;
+        display: block;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+      }
+      p {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        padding: 0 20px;
+        line-height: 40px;
+        margin: 0;
+        color: $font-color;
+        font-weight: 700;
+        text-align: center;
+        background-color: rgba(0, 0, 0, .6);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+}

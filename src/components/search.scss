@@ -1,0 +1,64 @@
+$primary-color: #d93c3c;
+$bg-color: #303030;
+$font-color: #FFFFFF;
+
+@mixin xs {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
+.header {
+  background-color: $bg-color;
+
+  .nav {
+    max-width: 1190px;
+    margin: 0 auto;
+    padding: 0 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $font-color;
+
+    @include xs {
+      flex-direction: column;
+      padding: 1rem 0 2.5rem;
+    }
+
+    .form {
+      width: 55%;
+      max-width: 450px;
+      font-size: 0;
+      background: rgba(0, 0, 0, .2);
+      border: none;
+      border-radius: 5px;
+
+      @include xs {
+        width: 84%;
+      }
+
+      input {
+        width: 70%;
+        height: 34px;
+        padding: 6px 12px;
+        background-color: #eeeeee;
+        border: none;
+        border-radius: 5px 0 0 5px;
+        font-size: 14px;
+      }
+
+      span {
+        display: inline-block;
+        width: 30%;
+        height: 34px;
+        text-align: center;
+        line-height: 36px;
+        font-size: 14px;
+        background-color: $primary-color;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        user-select: none;
+      }
+    }
+  }
+}
