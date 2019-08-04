@@ -5,6 +5,7 @@ import ImgList from './imgList.js';
 
 class Search extends React.Component {
   constructor(props) {
+    super(props);
     this.state = {
       disabled: false, // button throttled
       msg: '', // axios response error message
