@@ -36,7 +36,7 @@ class Search extends React.Component {
             </div>
           </div>
         </div>
-        <p className="msg">{}</p>
+        <p className="msg" style={{ display: this.state.msg ? 'block' : 'none'}}>{this.state.msg}</p>
         <ImgList photos={this.state.photos}/>
       </div>
     );
@@ -51,11 +51,10 @@ class Search extends React.Component {
   }
 
   handleSearch(e) {
-    e.preventDefault();
     if (this.state.disabled) { return }
     this.setState({ disabled: true });
     this.qryImg(this.state.text);
-    setTimeout(() => { this.setState({ disabled: false }) }, 2000);
+    setTimeout(() => { this.setState({ disabled: false }) }, 500);
   }
 
   /**
@@ -67,6 +66,7 @@ class Search extends React.Component {
    * @param lang {String} (Optional) The display language for the feed. See the feeds page for feed language information. Default is US English (en-us).
    */
   qryImg(tags) {
+    this.setState({ msg: '' }); // reset state
     let url = 'https://www.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1';
     if (tags) {
       url = url + '&tags=' + tags;
@@ -74,7 +74,7 @@ class Search extends React.Component {
     axios.post(url)
       .then((response) => {
         if (response.data.stat === 'fail') {
-          this.setState({ msg: response.data.message });
+          this.setState({ msg: response.data.message }); // show error message
         } else {
           this.setState({ photos: [].concat(response.data.items) });
         }
