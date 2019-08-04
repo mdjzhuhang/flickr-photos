@@ -5,11 +5,11 @@ import ImgList from './imgList.js';
 
 class Search extends React.Component {
   constructor(props) {
-    super(props);
     this.state = {
-      disabled: false,
-      photos: [],
-      text: ''
+      disabled: false, // button throttled
+      msg: '', // axios response error message
+      photos: [], // photo list
+      text: '' // search tags
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -35,13 +35,14 @@ class Search extends React.Component {
             </div>
           </div>
         </div>
+        <p className="msg">{}</p>
         <ImgList photos={this.state.photos}/>
       </div>
     );
   }
 
   componentDidMount() {
-    this.qryImg();
+    this.qryImg(); // request images on page loaded
   }
 
   handleChange(e) {
@@ -57,12 +58,11 @@ class Search extends React.Component {
   }
 
   /**
-   * query flickr photos
-   * @param id {String} (Optional) A single user ID. This specifies a user to fetch for.
-   * @param ids {Array} (Optional) A comma delimited list of user IDs. This specifies a list of users to fetch for.
+   * get photos from https://www.flickr.com/services/feeds/photos_public.gne
    * @param tags {Array} (Optional) A comma delimited list of tags to filter the feed by.
    * @param tagmode {String} (Optional) Control whether items must have ALL the tags (tagmode=all), or ANY (tagmode=any) of the tags. Default is ALL.
-   * @param format {String} (Optional) The format of the feed. See the feeds page for feed format information. Default is Atom 1.0.
+   * @param format {String} (Optional) The format of the feed. use json
+   * @param nojsoncallback. 1: raw JSON, with no function wrapper
    * @param lang {String} (Optional) The display language for the feed. See the feeds page for feed language information. Default is US English (en-us).
    */
   qryImg(tags) {
@@ -72,10 +72,15 @@ class Search extends React.Component {
     }
     axios.post(url)
       .then((response) => {
-        this.setState({ photos: [].concat(response.data.items) });
+        if (response.data.stat === 'fail') {
+          this.setState({ msg: response.data.message });
+        } else {
+          this.setState({ photos: [].concat(response.data.items) });
+        }
       })
       .catch((error) => {
         console.log(error);
+        this.setState({ msg: 'Sorry, there are something wrong. Please try again.' });
       });
   }
 }
