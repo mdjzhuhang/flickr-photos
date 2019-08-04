@@ -14,4 +14,11 @@ describe('Test Search', () => {
     const state = wrapper.state('msg')
     expect(state).toBe('');
   })
+
+  it('Show error message Dom when msg has value', () => {
+    const wrapper = shallow(<App />);
+    wrapper.setState({ msg: 'error' });
+    const dsn = wrapper.find('.msg').hasClass('dsn');
+    expect(dsn).toBe(false);
+  })
 });

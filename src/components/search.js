@@ -36,7 +36,7 @@ class Search extends React.Component {
             </div>
           </div>
         </div>
-        <p className="msg" style={{ display: this.state.msg ? 'block' : 'none'}}>{this.state.msg}</p>
+        <p className={`msg ${this.state.msg ? null : "dsn"}`}>{this.state.msg}</p>
         <ImgList photos={this.state.photos}/>
       </div>
     );
